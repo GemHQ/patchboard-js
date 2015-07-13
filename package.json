@@ -21,10 +21,10 @@
     "jsck": "~0.2.5"
   },
   "devDependencies": {
-    "deap": "~0.2.0",
     "coffee-script": "~1.9.3",
+    "deap": "~0.2.0",
     "evie": "file:../evie",
     "fairmont": "file:../fairmont",
     "jsck": "file:../jsck"
-  },
+  }
 }
