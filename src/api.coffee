@@ -22,7 +22,21 @@ module.exports = class API
     if (name = schema.id?.split("#")[1])?
       if (mapping = @mappings[name])?
         constructor = mapping.constructor
-        data = new constructor context, data
+        _data = data
+        if mapping.query?
+          # Some resources require query parameters to instantiate.
+          # For these, we've stuck the query definition onto the
+          # constructor.  For these cases, we substitute a simple
+          # function for the property.
+          # In usage, this looks like:
+          #   user.repository(name: "patchboard").update(content, callback)
+          data = (params) ->
+            if _data.url?
+              params.url = _data.url
+            new constructor context, {url: mapping.generate_url(params)}
+
+        else
+          data = new constructor context, _data
     return @_decorate(context, schema, data) || data
 
 
